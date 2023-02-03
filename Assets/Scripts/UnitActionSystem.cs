@@ -5,15 +5,34 @@ using UnityEngine;
 
 public class UnitActionSystem : MonoBehaviour
 {
-    [SerializeField] private Unit selectedUnit;
+    public static UnitActionSystem Instance { get; private set; }
+    
+    public event EventHandler OnSelectedUnitChanged;
+    
     [SerializeField] private LayerMask unitLayer;
+    [SerializeField] private Unit selectedUnit;
+
+    public Unit SelectedUnit => selectedUnit;
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError($"There are more than one UnitActionSystem!! {transform} - {Instance}");
+            Destroy(gameObject);
+            return;
+        }
+        
+        Instance = this;
+    }
 
     private void Update()
     {
-        
         if (Input.GetMouseButtonDown(0))
         {
             if (TryHandleUnitSelection()) return;
+
+            if (SelectedUnit == null) return;
             
             selectedUnit.Move(MouseWorld.GetPosition());
         }
@@ -27,11 +46,18 @@ public class UnitActionSystem : MonoBehaviour
         {
             if (raycastHit.transform.TryGetComponent(out Unit unit))
             {
-                selectedUnit = unit;
+                SetSelectedUnit(unit);
                 return true;
             }
         }
 
         return false;
+    }
+
+    private void SetSelectedUnit(Unit unit)
+    {
+        selectedUnit = unit;
+        
+        OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
     }
 }
