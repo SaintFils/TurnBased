@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fe6d9aba44dac0a4bad27d3866681473
+guid: d60c4d5849af7944882e3cd7cd538c78
 ModelImporter:
   serializedVersion: 22103
   internalIDToNameTable: []
@@ -527,13 +527,13 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: rifle aiming idle(Clone)
+    - name: rifle aiming idle2(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:Hips
-      parentName: rifle aiming idle(Clone)
+      parentName: rifle aiming idle2(Clone)
       position: {x: 0.00542992, y: 1.0390894, z: 0.005245349}
       rotation: {x: -0.07065546, y: -0.020026531, z: -0.0106531065, w: 0.99724287}
       scale: {x: 1, y: 1, z: 1}

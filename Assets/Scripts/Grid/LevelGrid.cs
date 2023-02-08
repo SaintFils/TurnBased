@@ -57,11 +57,16 @@ namespace Grid
 
         public bool IsValidGridPosition(GridPosition gridPosition) => gridSystem.IsValidGridPosition(gridPosition);
 
+        public int GetWidth() => gridSystem.Width;
+
+        public int GetHeight() => gridSystem.Height;
+        
         public bool IsGridPositionOccupied(GridPosition gridPosition)
         {
             GridObject gridObject = gridSystem.GetGridObject(gridPosition);
             return gridObject.HasAnyUnit();
         }
+        
 
     }
 }
