@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Grid;
 using UnityEngine;
 
 public class UnitActionSystem : MonoBehaviour
@@ -32,9 +33,14 @@ public class UnitActionSystem : MonoBehaviour
         {
             if (TryHandleUnitSelection()) return;
 
-            if (SelectedUnit == null) return;
-            
-            selectedUnit.Move(MouseWorld.GetPosition());
+            /*if (SelectedUnit == null) return;*/
+
+            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+
+            if (selectedUnit.MoveAction.IsValidGridPosition(mouseGridPosition))
+            {
+                selectedUnit.MoveAction.Move(mouseGridPosition);
+            }
         }
     }
 
