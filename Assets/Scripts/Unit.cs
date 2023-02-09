@@ -9,14 +9,17 @@ public class Unit : MonoBehaviour
 {
     private GridPosition gridPosition;
     private MoveAction moveAction;
-
+    private SpinAction spinAction;
+    
     public GridPosition GridPosition => gridPosition;
 
     public MoveAction MoveAction => moveAction;
+    public SpinAction SpinAction => spinAction;
 
     private void Awake()
     {
         moveAction = GetComponent<MoveAction>();
+        spinAction = GetComponent<SpinAction>();
     }
 
     private void Start()

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Actions
 {
-    public class MoveAction : MonoBehaviour
+    public class MoveAction : BaseAction
     {
         [SerializeField] private int maxMoveDistance = 4;
         [SerializeField] private float moveSpeed = 4.0f;
@@ -13,34 +13,39 @@ namespace Actions
         [SerializeField] private Animator unitAnimator;
 
         private Vector3 targetPosition;
-        private Unit unit;
-
-        private void Awake()
+        
+        protected override void Awake()
         {
-            unit = GetComponent<Unit>();
+            base.Awake();
             targetPosition = transform.position;
         }
 
         private void Update()
         {
+            if (!isActive) return;
+            
+            Vector3 moveDirection = (targetPosition - transform.position).normalized;
+            
             float stoppingDistance = .1f;
             if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
             {
-                Vector3 moveDirection = (targetPosition - transform.position).normalized;
                 transform.position += moveDirection * (moveSpeed * Time.deltaTime);
 
-                transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
                 unitAnimator.SetBool("IsWalking", true);
             }
             else
             {
                 unitAnimator.SetBool("IsWalking", false);
+                isActive = false;
             }
+            
+            transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
         }
 
         public void Move(GridPosition gridPosition)
         {
             this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
+            isActive = true;
         }
 
         public List<GridPosition> GetValidActionGridPositionList()

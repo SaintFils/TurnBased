@@ -29,13 +29,6 @@ public class UnitSelectedVisual : MonoBehaviour
 
     private void UpdateVisual()
     {
-        if (UnitActionSystem.Instance.SelectedUnit.Equals(unit))
-        {
-            meshRenderer.enabled = true;
-        }
-        else
-        {
-            meshRenderer.enabled = false;
-        } 
+        meshRenderer.enabled = UnitActionSystem.Instance.SelectedUnit.Equals(unit);
     }
 }
