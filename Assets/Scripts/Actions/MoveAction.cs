@@ -37,13 +37,15 @@ namespace Actions
             {
                 unitAnimator.SetBool("IsWalking", false);
                 isActive = false;
+                onActionComplete();
             }
             
             transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
         }
 
-        public void Move(GridPosition gridPosition)
+        public void Move(GridPosition gridPosition, Action onMoveComplete)
         {
+            onActionComplete = onMoveComplete;
             this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
             isActive = true;
         }

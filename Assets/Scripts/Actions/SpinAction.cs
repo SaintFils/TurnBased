@@ -7,7 +7,7 @@ namespace Actions
     public class SpinAction : BaseAction
     {
         private float spinAmount;
-       
+
         private void Update()
         {
             if (!isActive) return;
@@ -20,12 +20,14 @@ namespace Actions
             if (spinAmount >= 360f)
             {
                 isActive = false;
+                onActionComplete();
             }
             
         }
 
-        public void Spin()
+        public void Spin(Action onSpinComplete)
         {
+            onActionComplete = onSpinComplete;
             isActive = true;
             spinAmount = 0f;
         }
