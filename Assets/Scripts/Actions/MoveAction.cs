@@ -7,6 +7,8 @@ namespace Actions
 {
     public class MoveAction : BaseAction
     {
+        private const string MoveActionName = "Move";
+        
         [SerializeField] private int maxMoveDistance = 4;
         [SerializeField] private float moveSpeed = 4.0f;
         [SerializeField] private float rotationSpeed = 10.0f;
@@ -18,8 +20,11 @@ namespace Actions
         {
             base.Awake();
             targetPosition = transform.position;
+            
+            ActionNameValidation(MoveActionName);
         }
 
+       
         private void Update()
         {
             if (!isActive) return;
@@ -79,5 +84,6 @@ namespace Actions
             List<GridPosition> validPositions = GetValidActionGridPositionList();
             return validPositions.Contains(gridPosition);
         }
+
     }
 }

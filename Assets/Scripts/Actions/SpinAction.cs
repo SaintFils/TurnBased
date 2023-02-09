@@ -6,7 +6,16 @@ namespace Actions
 {
     public class SpinAction : BaseAction
     {
+        private const string SpinActionName = "Spin";
+        
         private float spinAmount;
+        
+        protected override void Awake()
+        {
+            base.Awake();
+            
+            ActionNameValidation(SpinActionName);
+        }
 
         private void Update()
         {
