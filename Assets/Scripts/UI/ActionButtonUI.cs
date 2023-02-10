@@ -13,6 +13,11 @@ namespace UI
         public void SetBaseAction(BaseAction baseAction)
         {
             textMeshPro.text = baseAction.ActionName;
+            
+            button.onClick.AddListener(() =>
+            {
+                UnitActionSystem.Instance.SetSelectedAction(baseAction);
+            });
         }
     }
 }
