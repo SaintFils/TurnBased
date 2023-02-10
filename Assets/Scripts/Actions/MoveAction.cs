@@ -48,14 +48,14 @@ namespace Actions
             transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
         }
 
-        public void Move(GridPosition gridPosition, Action onMoveComplete)
+        public override void TakeAction(GridPosition gridPosition, Action onMoveComplete)
         {
             onActionComplete = onMoveComplete;
             this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
             isActive = true;
         }
 
-        public List<GridPosition> GetValidActionGridPositionList()
+        public override List<GridPosition> GetValidActionGridPositionList()
         {
             List<GridPosition> validGridPosition = new List<GridPosition>();
 
@@ -78,12 +78,5 @@ namespace Actions
 
             return validGridPosition;
         }
-
-        public bool IsValidGridPosition(GridPosition gridPosition)
-        {
-            List<GridPosition> validPositions = GetValidActionGridPositionList();
-            return validPositions.Contains(gridPosition);
-        }
-
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Actions;
 using UnityEngine;
 
 namespace Grid
@@ -74,8 +75,8 @@ namespace Grid
         {
             HideAllGridPosition();
 
-            Unit selectedUnit = UnitActionSystem.Instance.SelectedUnit;
-            ShowGridPositionList(selectedUnit.MoveAction.GetValidActionGridPositionList());;
+            BaseAction selectedAction = UnitActionSystem.Instance.SelectedAction;
+            ShowGridPositionList(selectedAction.GetValidActionGridPositionList());;
         }
     }
 }
