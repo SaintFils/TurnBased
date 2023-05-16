@@ -35,6 +35,7 @@ namespace Actions
         }
 
         public abstract void TakeAction(GridPosition gridPosition, Action onActionComplete);
+        
         public abstract List<GridPosition> GetValidActionGridPositionList();
         
     }

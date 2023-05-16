@@ -22,6 +22,11 @@ public class UnitSelectedVisual : MonoBehaviour
         UpdateVisual();
     }
 
+    private void OnDisable()
+    {
+        UnitActionSystem.Instance.OnSelectedUnitChanged -= OnSelectedUnitChanged;
+    }
+
     private void OnSelectedUnitChanged(object sender, EventArgs _)
     {
         UpdateVisual();
