@@ -35,9 +35,7 @@ namespace UI
         private void CreateUnitActionButtons()
         {
             foreach (Transform actionButton in actionButtonContainer)
-            {
                 Destroy(actionButton.gameObject);
-            }
             
             actionButtonUIList.Clear();
         
@@ -67,9 +65,7 @@ namespace UI
         private void UpdateSelectedVisual()
         {
             foreach (ActionButtonUI actionButtonUI in actionButtonUIList)
-            {
                 actionButtonUI.UpdateSelectedVisual();
-            }
         }
     }
 }
