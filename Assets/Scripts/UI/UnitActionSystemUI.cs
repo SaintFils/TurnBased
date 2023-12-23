@@ -21,6 +21,8 @@ namespace UI
         {
             UnitActionSystem.Instance.OnSelectedUnitChanged += OnSelectedUnitChanged;
             UnitActionSystem.Instance.OnSelectedActionChanged += OnSelectedActionChanged;
+            UnitActionSystem.Instance.OnBusyChanged += OnBusyChanged;
+
             
             CreateUnitActionButtons();
             UpdateSelectedVisual();
@@ -66,6 +68,16 @@ namespace UI
         {
             foreach (ActionButtonUI actionButtonUI in actionButtonUIList)
                 actionButtonUI.UpdateSelectedVisual();
+        }
+        
+        private void OnBusyChanged(object sender, bool isBusy)
+        {
+            foreach (ActionButtonUI button in actionButtonUIList)
+            {
+                button.SetDisabled(isBusy);
+                if(!isBusy)
+                    button.UpdateSelectedVisual();
+            }
         }
     }
 }

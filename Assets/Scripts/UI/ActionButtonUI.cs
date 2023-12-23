@@ -12,6 +12,13 @@ namespace UI
         [SerializeField] private GameObject selectedOutline;
 
         private BaseAction baseAction;
+        private Color initialTextColor;
+
+
+        private void Start()
+        {
+            initialTextColor = textMeshPro.color;
+        }
 
         public void SetBaseAction(BaseAction baseAction)
         {
@@ -29,6 +36,25 @@ namespace UI
         {
             BaseAction selectedBaseAction = UnitActionSystem.Instance.SelectedAction;
             selectedOutline.SetActive(selectedBaseAction == baseAction);
+        }
+
+        public void SetDisabled(bool isDisabled)
+        {
+            if (isDisabled)
+            {
+                button.interactable = false;
+
+                var textColor = textMeshPro.color;
+                textColor.a = 0.25f;
+                textMeshPro.color = textColor;
+                
+                selectedOutline.SetActive(false);
+            }
+            else
+            {
+                button.interactable = true;
+                textMeshPro.color = initialTextColor;
+            }
         }
     }
 }
