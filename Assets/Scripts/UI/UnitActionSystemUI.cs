@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Actions;
+using TMPro;
 using UnityEngine;
 
 namespace UI
@@ -9,6 +10,7 @@ namespace UI
     {
         [SerializeField] private Transform actionButtonPrefab;
         [SerializeField] private Transform actionButtonContainer;
+        [SerializeField] private TextMeshProUGUI actionPointsText;
 
         private List<ActionButtonUI> actionButtonUIList;
 
@@ -22,8 +24,9 @@ namespace UI
             UnitActionSystem.Instance.OnSelectedUnitChanged += OnSelectedUnitChanged;
             UnitActionSystem.Instance.OnSelectedActionChanged += OnSelectedActionChanged;
             UnitActionSystem.Instance.OnBusyChanged += OnBusyChanged;
+            UnitActionSystem.Instance.OnActionStarted += OnActionStarted;
 
-            
+            UpdateActionPoints();
             CreateUnitActionButtons();
             UpdateSelectedVisual();
         }
@@ -32,6 +35,7 @@ namespace UI
         {
             UnitActionSystem.Instance.OnSelectedUnitChanged -= OnSelectedUnitChanged;
             UnitActionSystem.Instance.OnSelectedActionChanged -= OnSelectedActionChanged;
+            UnitActionSystem.Instance.OnActionStarted -= OnActionStarted;
         }
 
         private void CreateUnitActionButtons()
@@ -57,12 +61,12 @@ namespace UI
         {
             CreateUnitActionButtons();
             UpdateSelectedVisual();
+            UpdateActionPoints();
         }
 
-        private void OnSelectedActionChanged(object sender, EventArgs e)
-        {
-            UpdateSelectedVisual();
-        }
+        private void OnSelectedActionChanged(object sender, EventArgs e) => UpdateSelectedVisual();
+
+        private void OnActionStarted(object sender, EventArgs e) => UpdateActionPoints();
 
         private void UpdateSelectedVisual()
         {
@@ -78,6 +82,12 @@ namespace UI
                 if(!isBusy)
                     button.UpdateSelectedVisual();
             }
+        }
+
+        private void UpdateActionPoints()
+        {
+            Unit selectedUnit = UnitActionSystem.Instance.SelectedUnit;
+            actionPointsText.text = $"Action points: {selectedUnit.ActionPoints}";
         }
     }
 }

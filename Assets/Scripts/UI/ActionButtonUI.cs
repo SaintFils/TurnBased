@@ -14,7 +14,6 @@ namespace UI
         private BaseAction baseAction;
         private Color initialTextColor;
 
-
         private void Start()
         {
             initialTextColor = textMeshPro.color;
