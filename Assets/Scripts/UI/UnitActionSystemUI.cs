@@ -25,7 +25,8 @@ namespace UI
             UnitActionSystem.Instance.OnSelectedActionChanged += OnSelectedActionChanged;
             UnitActionSystem.Instance.OnBusyChanged += OnBusyChanged;
             UnitActionSystem.Instance.OnActionStarted += OnActionStarted;
-
+            Unit.OnAnyActionPointChanged += OnAnyActionPointChange;
+            
             UpdateActionPoints();
             CreateUnitActionButtons();
             UpdateSelectedVisual();
@@ -36,6 +37,7 @@ namespace UI
             UnitActionSystem.Instance.OnSelectedUnitChanged -= OnSelectedUnitChanged;
             UnitActionSystem.Instance.OnSelectedActionChanged -= OnSelectedActionChanged;
             UnitActionSystem.Instance.OnActionStarted -= OnActionStarted;
+            Unit.OnAnyActionPointChanged -= OnAnyActionPointChange;
         }
 
         private void CreateUnitActionButtons()
@@ -67,6 +69,9 @@ namespace UI
         private void OnSelectedActionChanged(object sender, EventArgs e) => UpdateSelectedVisual();
 
         private void OnActionStarted(object sender, EventArgs e) => UpdateActionPoints();
+
+        private void OnAnyActionPointChange(object sender, EventArgs e) => UpdateActionPoints();
+        
 
         private void UpdateSelectedVisual()
         {

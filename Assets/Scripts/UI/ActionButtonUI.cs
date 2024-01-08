@@ -1,3 +1,4 @@
+using System;
 using Actions;
 using TMPro;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace UI
         [SerializeField] private TextMeshProUGUI textMeshPro;
         [SerializeField] private Button button;
         [SerializeField] private GameObject selectedOutline;
+        [SerializeField] private GameObject notAvailableOutline;
 
         private BaseAction baseAction;
         private Color initialTextColor;
@@ -17,6 +19,13 @@ namespace UI
         private void Start()
         {
             initialTextColor = textMeshPro.color;
+
+            TurnSystem.Instance.OnTurnChanged += OnTurnChanged;
+        }
+
+        private void OnDisable()
+        {
+            TurnSystem.Instance.OnTurnChanged -= OnTurnChanged;
         }
 
         public void SetBaseAction(BaseAction baseAction)
@@ -34,7 +43,19 @@ namespace UI
         public void UpdateSelectedVisual()
         {
             BaseAction selectedBaseAction = UnitActionSystem.Instance.SelectedAction;
-            selectedOutline.SetActive(selectedBaseAction == baseAction);
+            Unit selectedUnit = UnitActionSystem.Instance.SelectedUnit;
+
+            if(selectedUnit.CanSpendActionPointsToTakeActions(selectedBaseAction))
+            {
+                selectedOutline.SetActive(selectedBaseAction == baseAction);
+                notAvailableOutline.SetActive(false);
+            }
+            else
+            {
+                selectedOutline.SetActive(false);
+                notAvailableOutline.SetActive(selectedBaseAction == baseAction);
+            }
+            
         }
 
         public void SetDisabled(bool isDisabled)
@@ -48,6 +69,7 @@ namespace UI
                 textMeshPro.color = textColor;
                 
                 selectedOutline.SetActive(false);
+                notAvailableOutline.SetActive(false);
             }
             else
             {
@@ -55,5 +77,7 @@ namespace UI
                 textMeshPro.color = initialTextColor;
             }
         }
+
+        private void OnTurnChanged(object sender, EventArgs e) => UpdateSelectedVisual();
     }
 }
